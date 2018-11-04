@@ -1,0 +1,8 @@
+/* CSS */
+
+/* Overlap canvas and video from webcam */
+video, canvas {
+	margin-left: 100px;
+	margin-top: 50px;
+	position: absolute;
+}
