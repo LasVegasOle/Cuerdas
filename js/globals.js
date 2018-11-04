@@ -5,9 +5,15 @@
 let shapes = [
   { x: 0, 
     y: 0,
-    neighbor: 0
+    neighbor: -1
   }
 ];
+
+shapes.push({x: 50, y: 60, neighbor: -1});
+shapes.push({x: -50, y: -6, neighbor: -1});
+shapes.push({x: 55, y: -60, neighbor: -1});
+shapes.push({x: -70, y: 60, neighbor: -1});
+
 
 /*window.globals = {
     array_line_2d: [],

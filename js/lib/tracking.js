@@ -261,7 +261,7 @@ tracking.trackVideo_ = function(element, tracker, options) {
 
         // if enough time has elapsed, draw the next frame
         if (elapsed > fpsInterval) {
-          console.log('running frame')       
+          //console.log('running frame')       
           // Get ready for next frame by setting then=now, but also adjust for your
           // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
           then = now - (elapsed % fpsInterval);
@@ -276,8 +276,8 @@ tracking.trackVideo_ = function(element, tracker, options) {
             tracking.trackCanvasInternal_(canvas, tracker);
           } 
         }
-        else
-        console.log('skipping frame')       
+        //else
+        //console.log('skipping frame')       
       });
     };
 
