@@ -35,8 +35,6 @@ function closest_neighbor() {
 
 		// Look for smallest distance and assign it as neighbor
 		shapes[index].neighbor = index_of_min(distances, 0);
-
-		draw_points();
 	});
 }
 
@@ -49,7 +47,7 @@ function index_of_min(arr, ) {
 
     let min = 0;
 
-    console.log(arr);
+    //console.log(arr);
     
     // Set initial min value different from zero
     if (arr[0] != 0) {
@@ -65,10 +63,43 @@ function index_of_min(arr, ) {
             min_idx = i;
             min = arr[i];
         }
-        console.log("i = "+ i + "; min_idx = " + min_idx + "; arr[i] = " + arr[i]);
+        //console.log("i = "+ i + "; min_idx = " + min_idx + "; arr[i] = " + arr[i]);
     }
-    console.log("min_idx = " + min_idx);
+    //console.log("min_idx = " + min_idx);
     return min_idx;
 }
 
+function shapes_to_strings(argument) {
+	// clear lines array
+	strings.length = 0;
+	shapes.forEach(function(item, index){
+
+		var add_new_string = true;
+
+			// Let's make sure we dont have already this string
+			for (var i = 0; i < strings.length; i++) {
+				// console.log(" shapes x =" + shapes[index].x + "; shapes y =" + shapes[index].y);
+				// console.log( "strings x1 = " + strings[i].x1 + "; y1 = " + strings[i].y1 + "; x2 = " + strings[i].x2 +"; y2 = " + strings[i].y2);
+				// is shape point equat to any of string?
+				if ((item.x === strings[i].x1 && item.y === strings[i].y1) || (item.x === strings[i].x2 && item.y === strings[i].y2)) {
+					// console.log("EQUAL! P1");
+					// is shape neighbor equal to the other string point? this means duplicated line, dont add it!
+					if ((shapes[item.neighbor].x == strings[i].x1 && shapes[item.neighbor].y == strings[i].y1) || 
+						(shapes[item.neighbor].x == strings[i].x2 && shapes[item.neighbor].y == strings[i].y2)) {
+						add_new_string = false;
+					}
+				}			
+			}
+
+		if (add_new_string) {
+			strings.push({x1: item.x,y1: item.y,x2: shapes[item.neighbor].x,y2: shapes[item.neighbor].y});
+		} 
+
+	});
+}
+
 closest_neighbor();
+console.log(shapes);
+shapes_to_strings();
+console.log(strings);
+draw_lines();

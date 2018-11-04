@@ -9,10 +9,22 @@ let shapes = [
   }
 ];
 
-shapes.push({x: 50, y: 60, neighbor: -1});
+
+// Strings is the number of source lines between lines, does not include duplicated connection between shapes (shapes that share 
+// neighbor aka round trips)
+let strings = [
+{
+  x1: 0,
+  y1: 0,
+  x2: 0,
+  y2: 0
+}
+];
+
+shapes.push({x: 100, y: 60, neighbor: -1});
 shapes.push({x: -50, y: -6, neighbor: -1});
-shapes.push({x: 55, y: -60, neighbor: -1});
-shapes.push({x: -70, y: 60, neighbor: -1});
+shapes.push({x: 155, y: -200, neighbor: -1});
+shapes.push({x: -70, y: 160, neighbor: -1});
 
 
 /*window.globals = {
