@@ -9,8 +9,6 @@ let shapes = [
   }
 ];
 
-shapes[0].x = 3;
-
 /*window.globals = {
     array_line_2d: [],
     open_line: true, 

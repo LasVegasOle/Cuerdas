@@ -7,7 +7,7 @@ window.onload = function() {
 
   var tracker = new tracking.ColorTracker(['yellow']);
 
-  tracking.track('#video', tracker, { camera: true });
+  tracking.track('#video', tracker, { camera: true, fps:2 });
 
   tracker.on('track', function(event) {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -27,6 +27,7 @@ window.onload = function() {
       addShape();
       
       // delete all shapes after each color scan!
+      // A.length = 0 empty an array frast everytime we start
 
     });
   });
