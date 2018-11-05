@@ -3,6 +3,41 @@
 /* Overlap canvas and video from webcam */
 video, canvas {
 	margin-left: 100px;
-	margin-top: 50px;
+	margin-top: 20px;
 	position: absolute;
+}
+
+form {
+	position: absolute;
+	margin-left: 100px;
+	margin-top: 500px;
+	float: left;
+	display: grid;
+	grid-template-columns: 300px 200px;
+    grid-gap: 3px 11px;
+}
+
+label {
+    grid-column: 1 / 2;
+    text-align: right;
+}
+ 
+input {
+    grid-column: 2 / 3;
+}
+
+button {
+	color: black;
+	font-size: 30px;
+	background-color: lightblue;
+	width: 200px;
+	height: 50px; 
+	border: none;
+	grid-column: 2 / 3;	
+	align-content: center;
+}
+
+button:hover {
+	color: darkblue;
+	background-color: white;
 }
