@@ -101,20 +101,20 @@ function shapes_to_strings(argument) {
 function tangential_point(x1, y1, x2, y2, node_numerator, node_denumerator, tangential_point_lenght) {
 	let delta_x = x1-x2;
 	let delta_y = y1-y2;
-	console.log("delta_x = " + delta_x + "; delta_y = " + delta_y);
+	//console.log("delta_x = " + delta_x + "; delta_y = " + delta_y);
 	let l = Math.sqrt(delta_x*delta_x + delta_y*delta_y);
-	console.log("l = " + l);
+	//console.log("l = " + l);
 	let cosX = delta_x / l;
 	let sinX = delta_y / l;
 
-	console.log("sinX = " + sinX + "cosX = " + cosX);
+	//console.log("sinX = " + sinX + "cosX = " + cosX);
 
 	let l_t = l * node_numerator / node_denumerator;
-	console.log("l_t = " + l_t);
+	//console.log("l_t = " + l_t);
 
 	let x_t = x1 - cosX * l_t;
 	let y_t = y1 - sinX * l_t;
-	console.log("x_t = " + x_t + "; y_t = " + y_t);
+	//console.log("x_t = " + x_t + "; y_t = " + y_t);
 
 	let x_p = x_t + tangential_point_lenght*sinX;
 	let y_p = y_t - tangential_point_lenght*cosX;

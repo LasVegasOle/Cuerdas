@@ -26,58 +26,53 @@ shapes.push({x: -50, y: -6, neighbor: -1});
 shapes.push({x: 155, y: -200, neighbor: -1});
 shapes.push({x: -70, y: 160, neighbor: -1});
 
+// Input params
 
-/*window.globals = {
-    array_line_2d: [],
-    open_line: true, 
-    epsilon: 5,  // Curve degreess 5 fine
-    flatten_size: 2.5,
-    debug: false, // not saving file
-    call_array_2d_to_3d: function() { array_2d_to_3d(); },
-    draw_line: function() { draw_line(); }
-};
-// Object that holds all the user configuration parameters
-var parameters = {
-  layer_height: 0,
-  width_x: 0,
-  length_y: 0,
-  height_z: 0,
-  num_of_layers: 0,
-  first_height: 0,
-  delta_x: 0,
-  total_rotation: 0,
-  layer_rotation: 0,
-  top_layer_scale: 0,
-  extrusion_radius: 0,  // This parameters is for ThreeJS Cyilinders radius
-  center_x: 0,
-  center_y: 0,
-  continuous_path: true,
-  material_diameter: 0,
-  nozzle_diameter: 0,
-  nozzle_material_surfaces_ratio: 0,
-  feedrate: 0,
-  delay: 0,
-  'update': function() {
-    this.width_x = parseFloat(document.getElementById("width_x").value);
-    //this.length_y = parseFloat(document.getElementById("length_y").value);
-    this.height_z = parseFloat(document.getElementById("height_z").value);
-    this.layer_height = parseFloat(document.getElementById("layer_height").value);
-    this.num_of_layers = this.height_z/this.layer_height;
-    this.first_height = parseFloat(document.getElementById("first_height").value);
-    this.total_rotation = parseFloat(document.getElementById("layer_rotation").value);
-    this.layer_rotation = parseFloat(this.total_rotation/this.num_of_layers);
-    this.top_layer_scale = parseFloat(document.getElementById("top_layer_scale").value);
-    this.extrusion_radius = this.layer_height/2;
-    this.center_x = parseFloat(document.getElementById("center_x").value);
-    this.center_y = parseFloat(document.getElementById("center_y").value);
-    this.feedrate = 60 * parseFloat(document.getElementById("feedrate").value); // from mm/s to mm/min
-    this.delay = parseFloat(document.getElementById("delay").value);
-    this.material_diameter = parseFloat(document.getElementById("material_diameter").value);
-    this.nozzle_diameter = parseFloat(document.getElementById("nozzle_diameter").value);
-    var nozzle_surface = Math.PI * Math.pow((this.nozzle_diameter/2),2);
-    var material_surface = Math.PI * Math.pow((this.material_diameter/2),2);
-    //console.log("Nozzle surface = " + nozzle_surface + ", Material Surface = " + material_surface);
-    this.nozzle_material_surfaces_ratio = nozzle_surface / material_surface;
-    //console.log("nozzle material surface ratio = " + this.nozzle_material_surfaces_ratio);
+let design_params = {
+  nodes_num: 0,
+  strings_num: 0,
+  strings_spacing: 0,
+  'update': function () {
+    this.nodes_num = parseInt(document.getElementById("nodes_num").value);
+    this.strings_num = parseInt(document.getElementById("strings_num").value);
+    this.strings_spacing = parseInt(document.getElementById("strings_spacing").value);
   }
-}*/
+}
+
+let printing_params = {
+  initial_height: 0,
+  speed: 0,
+  e_speed: 0,
+  extrusion_mult: 0,
+  retraction: 9,
+  'update': function () {
+    this.initial_height = parseFloat(document.getElementById("initial_height").value);
+    this.speed = parseFloat(document.getElementById("speed").value);
+    this.extrusion_mult = parseFloat(document.getElementById("extrusion_mult").value);
+    this.retraction = parseFloat(document.getElementById("retraction").value);
+  }
+}
+
+function init_globals(){
+
+// Handling events
+// Parameters Events handler
+document.getElementById('params').addEventListener('change', eventChangeHandler);
+function eventChangeHandler(e) {
+  if (e.target !== e.currentTarget) {
+    var item = e.target.id;
+    design_params.update();
+    printing_params.update();
+
+    console.log(design_params);
+    // redraw lines
+    }
+    e.stopPropagation();
+  }
+
+  design_params.update();
+  printing_params.update();
+
+}
+
+init_globals();

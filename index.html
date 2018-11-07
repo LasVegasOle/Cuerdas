@@ -15,34 +15,35 @@
 	      <video id="video" width="600" height="450" preload autoplay loop muted controls></video>
 	      <canvas id="canvas" width="600" height="450"></canvas>
 	  </div>
+	  	<div id="params">
 		<form>
+			<label class="field design" for="nodes_num">Number of nodes [<em>#</em>]:</label>
+			<input type ="number" class="inputs" id="nodes_num" value="1"/>
 
-			<label class="field shape" for="num_nodes">Number of nodes [<em>#</em>]:</label>
-			<input type ="number" class="inputs" id="num_nodes" value="1"/>
+			<label class="field design" for="strings_num">Number of strings [<em>#</em>]:</label>
+			<input type ="number" class="inputs" id="strings_num" value="3"/>
 
-			<label class="field shape" for="num_strings">Number of strings [<em>#</em>]:</label>
-			<input type ="number" class="inputs" id="num_strings" value="3"/>
-
-			<label class="field shape" for="strings_spacing">Strings spacing [<em>mm</em>]:</label>
+			<label class="field design" for="strings_spacing">Strings spacing [<em>mm</em>]:</label>
 			<input type ="number" class="inputs" id="strings_spacing" value="10"/>
 
-			<label class="field printing-param" for="start_height">Start height [<em>mm</em>]:</label>
-			<input type ="number" class="inputs" id="start_height" value="5"/>
+			<button id="gcode" type="button" onclick="createFile();">PRINT</button>
 
-			<label class="field printing-param" for="speed">Speed [<em>mm/min</em>]:</label>
+			<label class="field printing" for="initial_height">Initial height [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="initial_height" value="5"/>
+
+			<label class="field printing" for="speed">Speed [<em>mm/min</em>]:</label>
 			<input type ="number" class="inputs" id="speed" value="3000"/>
 
-			<label class="field printing-param" for="e_speed">Extrusion speed [<em>mm/min</em>]:</label>
+			<label class="field printing" for="e_speed">Extrusion speed [<em>mm/min</em>]:</label>
 			<input type ="number" class="inputs" id="e_speed" value="120"/>
 
-			<label class="field printing-param" for="extrusion">Extrusion [<em>mm</em>]:</label>
-			<input type ="number" class="inputs" id="extrusion" value="0.1"/>
+			<label class="field printing" for="extrusion_mult">Extrusion multiplier[<em>#</em>]:</label>
+			<input type ="number" class="inputs" id="extrusion_mult" value="0.1"/>
 
-			<label class="field printing-param" for="retraction">Retraction [<em>mm</em>]:</label>
+			<label class="field printing" for="retraction">Retraction [<em>mm</em>]:</label>
 			<input type ="number" class="inputs" id="retraction" value="2"/>
-
-			<button id="gcode" type="button" onclick="createFile();">GCode</button>
 		</form>
+	</div>
 		<script type="text/javascript" src="./js/globals.js"></script>
 		<script type="text/javascript" src="./js/drawing.js"></script>
 		<script type="text/javascript" src="./js/logic.js"></script>

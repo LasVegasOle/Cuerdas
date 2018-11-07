@@ -19,11 +19,16 @@ function draw_points() {
 }
 
 function draw_lines() {
-	shapes.forEach(function (item) {
+
+// Read inputs, odd?
+
+	strings.forEach(function (item) {
+
+
 		context.beginPath();
 		context.strokeStyle="#FF5555";
-		context.moveTo(item.x + canvas.width/2, item.y + canvas.height/2);
-		context.lineTo(shapes[item.neighbor].x + canvas.width/2, shapes[item.neighbor].y + canvas.height/2);
+		context.moveTo(item.x1 + canvas.width/2, item.y1 + canvas.height/2);
+		context.lineTo(item.x2 + canvas.width/2, item.y2 + canvas.height/2);
 		context.stroke();
 	});
 }
