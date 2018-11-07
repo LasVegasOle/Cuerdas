@@ -5,8 +5,8 @@ context.clearRect(0, 0, canvas.width, canvas.height);
 
 function draw_circle(x,y) {
   context.beginPath();
-  var MULT = 2.5;
-  var rad = 4;
+  var MULT = 1;
+  var rad = 3;
   context.arc(MULT*x + canvas.width/2, MULT*y + canvas.height/2, rad, 0, 2 * Math.PI, false);
   context.fillStyle = 'white';
   context.fill();  
