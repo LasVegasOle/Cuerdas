@@ -119,21 +119,8 @@ function tangential_point(x1, y1, x2, y2, node_numerator, node_denumerator, tang
 	let x_p = x_t + tangential_point_lenght*sinX;
 	let y_p = y_t - tangential_point_lenght*cosX;
 
-	return {x: x_p,y: y_p};
+	return {x: x_p, y: y_p};
 }
-
-//console.log(tangential_point(10, 20, 30, 40, 1, 2, 10));
-
-closest_neighbor();
-console.log(shapes);
-shapes_to_strings();
-console.log(strings);
-draw_lines();
-let idx = 3;
-let point = tangential_point(strings[idx].x1, strings[idx].y1, strings[idx].x2, strings[idx].y2, 1, 2, -60);
-console.log(point);
-draw_circle(point.x, point.y);
-
 
 // Perpendicular line to a point
 // https://www.mathopenref.com/coordperpendicular.html

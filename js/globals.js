@@ -64,8 +64,7 @@ function eventChangeHandler(e) {
     design_params.update();
     printing_params.update();
 
-    console.log(design_params);
-    // redraw lines
+    draw_lines();
     }
     e.stopPropagation();
   }
@@ -74,5 +73,3 @@ function eventChangeHandler(e) {
   printing_params.update();
 
 }
-
-init_globals();
