@@ -43,11 +43,16 @@ let printing_params = {
   initial_height: 0,
   speed: 0,
   e_speed: 0,
+  nozzle_diam: 0,
+  cartridge_diam: 0,
   extrusion_mult: 0,
   retraction: 9,
+
   'update': function () {
     this.initial_height = parseFloat(document.getElementById("initial_height").value);
     this.speed = parseFloat(document.getElementById("speed").value);
+    this.nozzle_diam = parseFloat(document.getElementById("nozzle_diam").value);
+    this.cartridge_diam = parseFloat(document.getElementById("cartridge_diam").value);
     this.extrusion_mult = parseFloat(document.getElementById("extrusion_mult").value);
     this.retraction = parseFloat(document.getElementById("retraction").value);
   }

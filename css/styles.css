@@ -5,6 +5,8 @@ video, canvas {
 	margin-left: 100px;
 	margin-top: 20px;
 	position: absolute;
+	left: 50%; 
+	margin-left: -300px;
 }
 
 form {
