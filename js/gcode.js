@@ -1,5 +1,32 @@
 // This file creates and safes into a file our GCODE
 
+function build_gcode(){
+	var gcode = [];
+	// Differenciate printing movements versus "move to no printing" 
+	// Calculate extrusion distance
+
+	// Homing
+	gcode += "G28 \n";
+
+	strings.forEach(function(item, index) {
+
+		
+	});
+
+
+	// Iterate strings
+		// Move to string
+		// Print string
+			// Retraction
+			// Zlift
+
+
+	// End gcode homing printer
+	gcode += "G28 \n";
+	
+	return gcode;
+}
+
 function create_file(){
   var output = get_parameters();
   output += build_gcode();
