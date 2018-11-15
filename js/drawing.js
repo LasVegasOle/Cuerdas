@@ -56,9 +56,11 @@ function draw_lines() {
 		
 		length = i*design_params.strings_spacing - initial_offset;
 
+		console.log("strings_num = " + strings_num);
+
 		// Positive string
-		for (var i = 0; i < strings_num; i++) {
-			//console.log("i = " + i)
+		for (var i = 0; i < strings_num/2 +1; i++) {
+			console.log("i_pos = " + i)
 			let spacing = i * design_params.strings_spacing - initial_offset;
 
 			//console.log("strings_num = " + strings_num + 
@@ -76,21 +78,21 @@ function draw_lines() {
 				if(j%2) {
 
 					t = tangential_point(item.x1, item.y1, item.x2, item.y2, 
-											1*j, design_params.nodes_num + 1, 
+											j, design_params.nodes_num + 1, 
 											spacing);
 
 					draw_line(p_node.x, p_node.y, t.x, t.y);
 
-					//console.log("ODD; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
+					console.log("ODD; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
 
 				} else {
 
 					t = tangential_point(item.x1, item.y1, item.x2, item.y2, 
-											1*j, design_params.nodes_num + 1, 
+											j, design_params.nodes_num + 1, 
 											-spacing);
 
 					draw_line(p_node.x, p_node.y, t.x, t.y);
-					//console.log("EVEN; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
+					console.log("EVEN; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
 				}
 				p_node = t;
 			}
@@ -99,8 +101,8 @@ function draw_lines() {
 		}
 
 		// Negative string
-		for (var i = 0; i < strings_num; i++) {
-			//console.log("i = " + i)
+		for (var i = 0; i < strings_num/2 + 1; i++) {
+			console.log("i_neg = " + i)
 			let spacing = - i * design_params.strings_spacing + initial_offset;
 
 			//console.log("strings_num = " + strings_num + 
@@ -118,21 +120,21 @@ function draw_lines() {
 				if(j%2) {
 
 					t = tangential_point(item.x2, item.y2, item.x1, item.y1, 
-											1*j, design_params.nodes_num + 1, 
+											j, design_params.nodes_num + 1, 
 											-spacing);
 
 					draw_line(p_node.x, p_node.y, t.x, t.y);
 
-					//console.log("ODD; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
+					console.log("ODD; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
 
 				} else {
 
 					t = tangential_point(item.x2, item.y2, item.x1, item.y1, 
-											1*j, design_params.nodes_num + 1, 
+											j, design_params.nodes_num + 1, 
 											spacing);
 
 					draw_line(p_node.x, p_node.y, t.x, t.y);
-					//console.log("EVEN; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
+					console.log("EVEN; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
 				}
 				p_node = t;
 			}
