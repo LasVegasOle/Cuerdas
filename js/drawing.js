@@ -78,7 +78,7 @@ function draw_lines() {
 				if(j%2) {
 
 					t = tangential_point(item.x1, item.y1, item.x2, item.y2, 
-											j, design_params.nodes_num + 1, 
+											j*2 - 1, design_params.nodes_num*2, 
 											spacing);
 
 					draw_line(p_node.x, p_node.y, t.x, t.y);
@@ -88,7 +88,7 @@ function draw_lines() {
 				} else {
 
 					t = tangential_point(item.x1, item.y1, item.x2, item.y2, 
-											j, design_params.nodes_num + 1, 
+											j*2 - 1, design_params.nodes_num*2, 
 											-spacing);
 
 					draw_line(p_node.x, p_node.y, t.x, t.y);
@@ -120,7 +120,7 @@ function draw_lines() {
 				if(j%2) {
 
 					t = tangential_point(item.x2, item.y2, item.x1, item.y1, 
-											j, design_params.nodes_num + 1, 
+											j*2 - 1, design_params.nodes_num*2, 
 											-spacing);
 
 					draw_line(p_node.x, p_node.y, t.x, t.y);
@@ -130,7 +130,7 @@ function draw_lines() {
 				} else {
 
 					t = tangential_point(item.x2, item.y2, item.x1, item.y1, 
-											j, design_params.nodes_num + 1, 
+											j*2 - 1, design_params.nodes_num*2, 
 											spacing);
 
 					draw_line(p_node.x, p_node.y, t.x, t.y);
