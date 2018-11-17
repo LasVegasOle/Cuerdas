@@ -26,6 +26,77 @@ function draw_line(x1, y1, x2, y2) {
 	context.stroke();
 }
 
+
+function draw_node_lines(p_start, p_end, initial_offset, positive) {
+
+	// sing
+	//console.log("positive = " + positive);
+	// Yes, the sign game to make this work with odd and even nodes is magical, future Luis I am sorry
+	let sign;
+	if(positive) {
+		sign = 1;
+	} else {
+		if (design_params.nodes_num%2) {
+		sign = -1;
+		} else {
+		sign = 1;
+		}
+	}
+
+	// Strings
+	for (var i = 1; i <= design_params.strings_num/2; i++) {
+
+	let p_node = p_start;
+	let spacing;
+
+	if(positive) {
+
+		//console.log("i_pos = " + i);
+		spacing = i * design_params.strings_spacing - initial_offset;
+
+	} else { // negative
+		//console.log("i_neg = " + i);
+		spacing = - i * design_params.strings_spacing + initial_offset;
+	}
+
+		for (var j = 1; j < (design_params.nodes_num + 1); j++) {
+			
+			let t;
+			//console.log("Number of Nodes = " + design_params.nodes_num);
+
+			if(j%2) {
+
+				// "j*2 - 1, design_params.nodes_num*2,"
+				// This is magic math to make the distance between nodes equals
+				t = tangential_point(p_start.x, p_start.y, p_end.x, p_end.y, 
+										j*2 - 1, design_params.nodes_num*2, 
+										sign*spacing);
+
+				draw_line(p_node.x, p_node.y, t.x, t.y);
+				draw_circle(t.x, t.y);
+				//console.log("spacing = " + spacing);
+				//console.log("+ ODD; sign = " +sign + " j = " + j + ", p_x = " + p_node.x + ", p_y = " + p_node.y + "; t_x = " + t.x + "; t_y = " + t.y);
+
+			} else {
+				// flip sign for multiple nodes
+				let multy_node_sign = -1*sign;
+
+				t = tangential_point(p_start.x, p_start.y, p_end.x, p_end.y, 
+										j*2 - 1, design_params.nodes_num*2, 
+										multy_node_sign*spacing);
+				draw_circle(t.x, t.y);
+				draw_line(p_node.x, p_node.y, t.x, t.y);
+				//console.log("+ EVEN; sign = " +sign + ", j = " + j + ", p_x = " + p_node.x + ", p_y = " + p_node.y + "; t_x = " + t.x + "; t_y = " + t.y);
+			}
+			p_node = t;
+		}
+
+		draw_line(p_node.x, p_node.y, p_end.x, p_end.y);
+		//console.log("Closing string; p1 x: " + p_node.x + ", p1 y: " + p_node.y + ", p2 x: " + p_end.x + ", p2 y: " + p_end.y);
+	}
+}
+
+
 function draw_lines() {
 
 	context.clearRect(0, 0, canvas.width, canvas.height);
@@ -53,94 +124,16 @@ function draw_lines() {
 			// Even
 			initial_offset = design_params.strings_spacing/2;
 		}
-		
-		length = i*design_params.strings_spacing - initial_offset;
 
-		console.log("strings_num = " + strings_num);
 
-		// Positive string
-		for (var i = 0; i < strings_num/2 +1; i++) {
-			console.log("i_pos = " + i)
-			let spacing = i * design_params.strings_spacing - initial_offset;
+		//console.log("\n~~~~ POSITIVE STRINGS ~~~~ ");
 
-			//console.log("strings_num = " + strings_num + 
-			//			" ;strings_spacing = " + design_params.strings_spacing +
-			//			" ;initial_offset = " + initial_offset);
-			//console.log(length);
+		// Postive direction strings
+		draw_node_lines({x: item.x1, y: item.y1}, {x: item.x2, y: item.y2}, initial_offset, true);
 
-			let p_node = {x: item.x1 , y: item.y1};
+		//console.log("\n~~~~ NEGATIVE STRINGS ~~~~ ");
+		// Negative direction strings
+		draw_node_lines({x: item.x2, y: item.y2}, {x: item.x1, y: item.y1}, initial_offset, false);
 
-			for (var j = 1; j < (design_params.nodes_num + 1); j++) {
-				
-				//let p_length = length * j / (design_params.nodes_num + 1);
-				let t;
-
-				if(j%2) {
-
-					t = tangential_point(item.x1, item.y1, item.x2, item.y2, 
-											j*2 - 1, design_params.nodes_num*2, 
-											spacing);
-
-					draw_line(p_node.x, p_node.y, t.x, t.y);
-
-					console.log("ODD; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
-
-				} else {
-
-					t = tangential_point(item.x1, item.y1, item.x2, item.y2, 
-											j*2 - 1, design_params.nodes_num*2, 
-											-spacing);
-
-					draw_line(p_node.x, p_node.y, t.x, t.y);
-					console.log("EVEN; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
-				}
-				p_node = t;
-			}
-
-			draw_line(p_node.x, p_node.y, item.x2, item.y2);
-		}
-
-		// Negative string
-		for (var i = 0; i < strings_num/2 + 1; i++) {
-			console.log("i_neg = " + i)
-			let spacing = - i * design_params.strings_spacing + initial_offset;
-
-			//console.log("strings_num = " + strings_num + 
-			//			" ;strings_spacing = " + design_params.strings_spacing +
-			//			" ;initial_offset = " + initial_offset);
-			//console.log(length);
-
-			let p_node = {x: item.x2 , y: item.y2};
-
-			for (var j = 1; j < (design_params.nodes_num + 1); j++) {
-				
-				//let p_length = length * j / (design_params.nodes_num + 1);
-				let t;
-
-				if(j%2) {
-
-					t = tangential_point(item.x2, item.y2, item.x1, item.y1, 
-											j*2 - 1, design_params.nodes_num*2, 
-											-spacing);
-
-					draw_line(p_node.x, p_node.y, t.x, t.y);
-
-					console.log("ODD; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
-
-				} else {
-
-					t = tangential_point(item.x2, item.y2, item.x1, item.y1, 
-											j*2 - 1, design_params.nodes_num*2, 
-											spacing);
-
-					draw_line(p_node.x, p_node.y, t.x, t.y);
-					console.log("EVEN; j = " + j + "; t_x = " + t.x + "; t_y = " + t.y);
-				}
-				p_node = t;
-			}
-
-			draw_line(p_node.x, p_node.y, item.x1, item.y1);
-
-		}
 	});
 }

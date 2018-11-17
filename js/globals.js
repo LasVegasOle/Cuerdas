@@ -21,8 +21,8 @@ let strings = [
 }
 ];
 
-shapes.push({x: 100, y: 60, neighbor: -1});
-shapes.push({x: -50, y: -6, neighbor: -1});
+shapes.push({x: 100, y: 0, neighbor: -1});
+shapes.push({x: -100, y: 0, neighbor: -1});
 shapes.push({x: 155, y: -200, neighbor: -1});
 shapes.push({x: -70, y: 160, neighbor: -1});
 
