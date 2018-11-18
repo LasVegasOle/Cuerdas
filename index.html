@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="./css/styles.css">
 
 		<script type="text/javascript" src="./js/lib/tracking.js"></script>
-
+		<script type="text/javascript" src="./js/lib/FileSaver.js"></script>
 
 	</head>
 
@@ -26,7 +26,7 @@
 			<label class="field design" for="strings_spacing">Strings spacing [<em>mm</em>]:</label>
 			<input type ="number" class="inputs" id="strings_spacing" value="30"/>
 
-			<button id="gcode" type="button" onclick="createFile();">PRINT</button>
+			<button id="gcode" type="button" onclick="create_file();">PRINT</button>
 
 			<label class="field printing" for="initial_height">Initial height [<em>mm</em>]:</label>
 			<input type ="number" class="inputs" id="initial_height" value="5"/>
@@ -55,5 +55,6 @@
 		<script type="text/javascript" src="./js/drawing.js"></script>
 		<script type="text/javascript" src="./js/vision.js"></script>
 		<script type="text/javascript" src="./js/cuerdas.js"></script>
+		<script type="text/javascript" src="./js/gcode.js"></script>
 	</body>
 </html>

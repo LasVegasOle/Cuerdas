@@ -1,12 +1,7 @@
 window.onload = function() {
 	init_globals();
-	init_vision();
-
-	draw_circle(0,0);	
+	//init_vision();
+		closest_neighbor();  // logic.js
+    	shapes_to_strings();
+    	draw_lines();
 }
-
-
-//closest_neighbor();
-//shapes_to_strings();
-
-//draw_lines();
