@@ -1,6 +1,12 @@
-init_globals();
+window.onload = function() {
+	init_globals();
+	init_vision();
 
-closest_neighbor();
-shapes_to_strings();
+	draw_circle(0,0);	
+}
 
-draw_lines();
+
+//closest_neighbor();
+//shapes_to_strings();
+
+//draw_lines();

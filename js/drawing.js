@@ -7,7 +7,7 @@ function draw_circle(x,y) {
   context.beginPath();
   var MULT = 1;
   var rad = 3;
-  context.arc(MULT*x + canvas.width/2, MULT*y + canvas.height/2, rad, 0, 2 * Math.PI, false);
+  context.arc(MULT*x /*+ canvas.width/2*/, MULT*y/* + canvas.height/2*/, rad, 0, 2 * Math.PI, false);
   context.fillStyle = 'white';
   context.fill();  
 }
@@ -21,8 +21,9 @@ function draw_points() {
 function draw_line(x1, y1, x2, y2) {
 	context.beginPath();
 	context.strokeStyle="#FF5555";
-	context.moveTo(x1 + canvas.width/2, y1 + canvas.height/2);
-	context.lineTo(x2 + canvas.width/2, y2 + canvas.height/2);
+	context.lineWidth=3;
+	context.moveTo(x1/* + canvas.width/2*/, y1/* + canvas.height/2*/);
+	context.lineTo(x2 /*+ canvas.width/2*/, y2 /*+ canvas.height/2*/);
 	context.stroke();
 }
 
