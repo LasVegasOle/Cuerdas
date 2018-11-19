@@ -3,8 +3,8 @@
 
 // Shapes center point
 let shapes = [
-  { x: 0, 
-    y: 0,
+  { x: 50, 
+    y: 200,
     neighbor: -1
   }
 ];
@@ -22,9 +22,9 @@ let strings = [
 ];
 
 shapes.push({x: 100, y: 200, neighbor: -1});
-shapes.push({x: 300, y: 150, neighbor: -1});
-shapes.push({x: 155, y: 200, neighbor: -1});
-shapes.push({x: 570, y: 360, neighbor: -1});
+shapes.push({x: 300, y: 200, neighbor: -1});
+//shapes.push({x: 155, y: 200, neighbor: -1});
+//shapes.push({x: 570, y: 360, neighbor: -1});
 
 // Input params
 
@@ -46,17 +46,19 @@ let printing_params = {
   nozzle_diam: 0,
   cartridge_diam: 0,
   extrusion_mult: 0,
-  retraction: 9,
+  retraction: 1,
   nozzle_material_surface_ratio: 0,
   e: 0,
+  last_p: {x: 0, y: 0},
   'update': function () {
     this.initial_height = parseFloat(document.getElementById("initial_height").value);
     this.speed = parseFloat(document.getElementById("speed").value);
+    this.e_speed = parseFloat(document.getElementById("e_speed").value); 
     this.nozzle_diam = parseFloat(document.getElementById("nozzle_diam").value);
     this.cartridge_diam = parseFloat(document.getElementById("cartridge_diam").value);
     this.extrusion_mult = parseFloat(document.getElementById("extrusion_mult").value);
     this.retraction = parseFloat(document.getElementById("retraction").value);
-    this. nozzle_material_surface_ratio = ( Math.PI * Math.pow((this.nozzle_diam/2),2) ) / ( Math.PI * Math.pow((this.cartridge_diam/2),2) );
+    this.nozzle_material_surface_ratio = ( Math.PI * Math.pow((this.nozzle_diam/2),2) ) / ( Math.PI * Math.pow((this.cartridge_diam/2),2) );
   }
 }
 

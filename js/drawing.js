@@ -117,10 +117,10 @@ function draw_lines() {
 			draw_line(item.x1, item.y1, item.x2, item.y2);
 			strings_num--;
 			// invert points to draw doing a round tirp
-			x1 = item.x2;
-			y1 = item.y2;
-			x2 = item.x1;
-			y2 = item.y1;
+			item.x2 = x1;
+			item.y2 = y1;
+			item.x1 = x2;
+			item.y1 = y2;
 		} else {
 			// Even
 			initial_offset = design_params.strings_spacing/2;
