@@ -42,7 +42,7 @@ function gcode_line(x1, y1, x2, y2) {
 
  		// Zlift to avoid crush printed parts, 2 hardcoded zlift = 2
  		let z = printing_params.initial_height + 2;
- 		gc += "G1 Z" + z + " F" + printing_params.e_speed + " \n";
+ 		gc += "G1 Z" + z + " F" + printing_params.speed + " \n";
 
  		// movement Gcode
 		gc += "G1 X" + move_x + 
@@ -170,9 +170,27 @@ function build_gcode(){
 		let y2 = item.y2;
 		let initial_offset = 0;
 		
-		gcode += "; Start new string, move to first point \n";
+		gcode += "; Start new string, move to first point, zlift and retract \n";
+
+
+ 		// Retraction
+ 		printing_params.e -= printing_params.retraction;
+ 		gcode += "G1 E" + Math.round(10000 * printing_params.e)/10000 + " F" + printing_params.e_speed + " \n";
+
+		// Zlift to avoid crush printed parts, 2 hardcoded zlift = 2
+ 		let z = printing_params.initial_height + 2;
+ 		gcode += "G1 Z" + z + " F" + printing_params.speed + " \n";
+
 		// Move to first point of the string
-		gcode += "G1 X" + item.x1 + " Y" + item.y1 + " Z" + printing_params.initial_height + " F" + printing_params.speed + " \n"; 
+		gcode += "G1 X" + item.x1 + " Y" + item.y1 + " F" + printing_params.speed + " \n"; 
+
+		// Zlift down
+ 		gcode += "G1 Z" + printing_params.initial_height + " F" + printing_params.speed + " \n";
+
+		// Revert retraction
+ 		printing_params.e += printing_params.retraction;
+ 		gcode += "G1 E" + Math.round(10000 * printing_params.e)/10000 + " F" + printing_params.e_speed + " \n";
+
 
 		// update last point
 		printing_params.last_p.x = Math.round(100 * item.x1)/100; 
