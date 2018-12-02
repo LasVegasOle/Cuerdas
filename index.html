@@ -29,16 +29,19 @@
 			<button id="gcode" type="button" onclick="create_file();">PRINT</button>
 
 			<label class="field printing" for="initial_height">Initial height [<em>mm</em>]:</label>
-			<input type ="number" class="inputs" id="initial_height" value="5"/>
+			<input type ="number" class="inputs" id="initial_height" value="13"/>
 
 			<label class="field printing" for="speed">Speed [<em>mm/min</em>]:</label>
 			<input type ="number" class="inputs" id="speed" value="3000"/>
+
+			<label class="field printing" for="travel_speed">travel speed [<em>mm/min</em>]:</label>
+			<input type ="number" class="inputs" id="travel_speed" value="6000"/>
 
 			<label class="field printing" for="e_speed">Extrusion speed [<em>mm/min</em>]:</label>
 			<input type ="number" class="inputs" id="e_speed" value="120"/>
 
 			<label class="field printing" for="nozzle_diam">Nozzle diameter [<em>mm</em>]:</label>
-			<input type ="number" class="inputs" id="nozzle_diam" value="3"/>
+			<input type ="number" class="inputs" id="nozzle_diam" value="1.5"/>
 
 			<label class="field printing" for="cartridge_diam">Cartridge diameter [<em>mm</em>]:</label>
 			<input type ="number" class="inputs" id="cartridge_diam" value="39"/>
@@ -46,8 +49,15 @@
 			<label class="field printing" for="extrusion_mult">Extrusion multiplier[<em>#</em>]:</label>
 			<input type ="number" class="inputs" id="extrusion_mult" value="1.1"/>
 
+			<label class="field printing" for="pressure_build_up">Initial pressure build up [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="pressure_build_up" value="1"/>
+
 			<label class="field printing" for="retraction">Retraction [<em>mm</em>]:</label>
 			<input type ="number" class="inputs" id="retraction" value="1"/>
+
+			<label class="field printing" for="dish_diam">Dish diameter [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="dish_diam" value="120"/>
+
 		</form>
 	</div>
 		<script type="text/javascript" src="./js/globals.js"></script>

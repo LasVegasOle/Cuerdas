@@ -1,9 +1,12 @@
 // This file creates and safes into a file our GCODE
 
-function center_and_scale_string_points(multiplier) {
+function center_and_scale_string_points() {
 
 	let x_offset = canvas.width/2;
 	let y_offset = canvas.height/2;
+
+	let x_multiplier = printing_params.dish_diam / canvas.width;
+	let y_multiplier = printing_params.dish_diam / canvas.height;
 
 	// Make a deep clone of the strings array
 	let print_strings = JSON.parse(JSON.stringify(strings));
@@ -15,10 +18,10 @@ function center_and_scale_string_points(multiplier) {
 		item.y1 -= y_offset;
 		item.y2 -= y_offset;
 
-		item.x1 *= multiplier;
-		item.x2 *= multiplier;
-		item.y1 *= multiplier;
-		item.y2 *= multiplier;
+		item.x1 *= x_multiplier;
+		item.x2 *= x_multiplier;
+		item.y1 *= y_multiplier;
+		item.y2 *= y_multiplier;
 	});
 
 	console.log(print_strings);
@@ -42,15 +45,15 @@ function gcode_line(x1, y1, x2, y2) {
 
  		// Zlift to avoid crush printed parts, 2 hardcoded zlift = 2
  		let z = printing_params.initial_height + 2;
- 		gc += "G1 Z" + z + " F" + printing_params.speed + " \n";
+ 		gc += "G1 Z" + z + " F" + printing_params.travel_speed + " \n";
 
  		// movement Gcode
 		gc += "G1 X" + move_x + 
 				" Y" + move_y + 
-				" F" + printing_params.speed + " \n";
+				" F" + printing_params.travel_speed + " \n";
 	
 		// Zlift down
- 		gc += "G1 Z" + printing_params.initial_height + " F" + printing_params.speed + " \n";
+ 		gc += "G1 Z" + printing_params.initial_height + " F" + printing_params.travel_speed + " \n";
 
 		// Revert retraction
  		printing_params.e += printing_params.retraction;
@@ -63,7 +66,7 @@ function gcode_line(x1, y1, x2, y2) {
 	printing_params.last_p.y = Math.round(100 * y2)/100; 
 
 	// Calculate extrude length
-	var distance = Math.sqrt(Math.pow( x1-x2 ,2) + Math.pow( y1-y2,2 ));
+	var distance = Math.sqrt(Math.pow( x1 - x2 ,2) + Math.pow( y1-y2,2 ));
 	console.log("distance = "+ distance);
 
 	printing_params.e += distance * printing_params.nozzle_material_surface_ratio * printing_params.extrusion_mult;
@@ -95,6 +98,11 @@ function gcode_node_lines(p_start, p_end, initial_offset, positive) {
 		}
 	}
 
+	let x_multiplier = printing_params.dish_diam / canvas.width;
+	let y_multiplier = printing_params.dish_diam / canvas.height;
+
+	let multiplier = ( x_multiplier + y_multiplier ) / 2;
+
 	// Strings
 	for (var i = 1; i <= design_params.strings_num/2; i++) {
 
@@ -104,11 +112,11 @@ function gcode_node_lines(p_start, p_end, initial_offset, positive) {
 	if(positive) {
 
 		//console.log("i_pos = " + i);
-		spacing = i * design_params.strings_spacing - initial_offset;
+		spacing = (i * design_params.strings_spacing - initial_offset)*multiplier;
 
 	} else { // negative
 		//console.log("i_neg = " + i);
-		spacing = - i * design_params.strings_spacing + initial_offset;
+		spacing = (- i * design_params.strings_spacing + initial_offset)*multiplier;
 	}
 
 		for (var j = 1; j < (design_params.nodes_num + 1); j++) {
@@ -152,16 +160,20 @@ function build_gcode(){
 	var gcode = [];
 
 	// Transform strings points to printer coordinates (center 0,0 and scale)
-	let print_strings = center_and_scale_string_points(0.5);
+	let print_strings = center_and_scale_string_points();
 
 	// Differenciate printing movements versus "move to no printing" 
+	// initialize extruder
+	printing_params.e = 0;
 
 	// Calculate extrusion distance
 
 	// Homing
 	gcode += "G28 \n";
+	gcode += "G92 E0 \n";
+	let first_string = true;
 
-	print_strings.forEach(function (item) {
+	print_strings.forEach(function (item, index) {
 
 		let strings_num = design_params.strings_num;
 		let x1 = item.x1;
@@ -174,18 +186,26 @@ function build_gcode(){
 
 
  		// Retraction
- 		printing_params.e -= printing_params.retraction;
- 		gcode += "G1 E" + Math.round(10000 * printing_params.e)/10000 + " F" + printing_params.e_speed + " \n";
+ 		if (!first_string) {
+ 			printing_params.e -= printing_params.retraction;
+ 			gcode += "G1 E" + Math.round(10000 * printing_params.e)/10000 + " F" + printing_params.e_speed + " \n";
+ 		}
 
 		// Zlift to avoid crush printed parts, 2 hardcoded zlift = 2
  		let z = printing_params.initial_height + 2;
- 		gcode += "G1 Z" + z + " F" + printing_params.speed + " \n";
+ 		gcode += "G1 Z" + z + " F" + printing_params.travel_speed + " \n";
 
 		// Move to first point of the string
-		gcode += "G1 X" + item.x1 + " Y" + item.y1 + " F" + printing_params.speed + " \n"; 
+		gcode += "G1 X" + Math.round(100*item.x1)/100 + " Y" + Math.round(100*item.y1)/100 + " F" + printing_params.travel_speed + " \n"; 
 
 		// Zlift down
  		gcode += "G1 Z" + printing_params.initial_height + " F" + printing_params.speed + " \n";
+
+ 		// Only add build up pressure for first string
+ 		if (first_string) {
+ 			printing_params.e += printing_params.pressure_build_up;
+ 			first_string = false;
+ 		}
 
 		// Revert retraction
  		printing_params.e += printing_params.retraction;
@@ -223,6 +243,10 @@ function build_gcode(){
 
 	});
 
+	// Revert build up pressure
+	printing_params.e -= printing_params.pressure_build_up;
+	gcode += "G1 E" + Math.round(10000 * printing_params.e)/10000 + " F" + printing_params.e_speed + " \n";
+
 	// End gcode homing printer
 	gcode += "G28 \n";
 	// Turn off motors
@@ -248,10 +272,13 @@ var params = [];
   params += "; Stings spacing [mm]: " + design_params.strings_spacing + "\n";
   params += "; Initial height [mm]: " + document.getElementById("initial_height").value + "\n";
   params += "; Speed [mm/min]: " + document.getElementById("speed").value + "\n"; 
+  params += "; Travel speed [mm/min]: " + document.getElementById("travel_speed").value + "\n"; 
   params += "; Extruder speed [mm/min]: " + document.getElementById("e_speed").value + "\n"; 
   params += "; Nozzle diameter [mm]: " + document.getElementById("nozzle_diam").value + "\n";
   params += "; Cartridge diameter [mm]: " + document.getElementById("cartridge_diam").value + "\n";
   params += "; Extrusion multiplier [#]: " + document.getElementById("extrusion_mult").value + "\n"; 
+  params += "; Pressure build up [mm]: " + document.getElementById("pressure_build_up").value + "\n"; 
   params += "; Retraction [mm]: " + document.getElementById("retraction").value + "\n";  
-return params;
+  params += "; Dish diameter [mm]: " + document.getElementById("dish_diam").value + "\n"; 
+  return params;
 }

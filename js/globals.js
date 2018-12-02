@@ -42,6 +42,7 @@ let design_params = {
 let printing_params = {
   initial_height: 0,
   speed: 0,
+  travel_speed: 0,
   e_speed: 0,
   nozzle_diam: 0,
   cartridge_diam: 0,
@@ -50,15 +51,21 @@ let printing_params = {
   nozzle_material_surface_ratio: 0,
   e: 0,
   last_p: {x: 0, y: 0},
+  dish_diam: 100,
+  pressure_build_up: 1,
   'update': function () {
     this.initial_height = parseFloat(document.getElementById("initial_height").value);
     this.speed = parseFloat(document.getElementById("speed").value);
+    this.travel_speed = parseFloat(document.getElementById("travel_speed").value); 
     this.e_speed = parseFloat(document.getElementById("e_speed").value); 
     this.nozzle_diam = parseFloat(document.getElementById("nozzle_diam").value);
     this.cartridge_diam = parseFloat(document.getElementById("cartridge_diam").value);
     this.extrusion_mult = parseFloat(document.getElementById("extrusion_mult").value);
     this.retraction = parseFloat(document.getElementById("retraction").value);
     this.nozzle_material_surface_ratio = ( Math.PI * Math.pow((this.nozzle_diam/2),2) ) / ( Math.PI * Math.pow((this.cartridge_diam/2),2) );
+    this.dish_diam = parseFloat(document.getElementById("dish_diam").value);
+    this.pressure_build_up = parseFloat(document.getElementById("pressure_build_up").value);
+
   }
 }
 
